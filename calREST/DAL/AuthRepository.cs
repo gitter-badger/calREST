@@ -25,7 +25,8 @@ namespace calREST.DAL
         {
             ApplicationUser user = new ApplicationUser
             {
-                UserName = userModel.UserName
+                Email = userModel.Email,
+                UserName = userModel.Email
             };
 
             var result = await _userManager.CreateAsync(user, userModel.Password);
