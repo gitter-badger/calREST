@@ -13,6 +13,7 @@ using calREST.Models;
 
 namespace calREST.Controllers
 {
+    [Authorize]
     public class AppointmentsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
