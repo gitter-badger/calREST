@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,6 +16,7 @@ namespace calREST.Models
 
         [ForeignKey("User")]
         public string UserId { get; set; }
+        [JsonIgnore]
         public virtual ApplicationUser User { get; set; }
     }
 }

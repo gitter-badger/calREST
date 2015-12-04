@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using calREST.Models;
+using Microsoft.AspNet.Identity;
+using System.Security.Claims;
 
 namespace calREST.Controllers
 {
@@ -21,7 +23,8 @@ namespace calREST.Controllers
         // GET: api/Appointments
         public IQueryable<Appointment> GetAppointments()
         {
-            return db.Appointments;
+           var userId = User.Identity.GetUserId();
+           return db.Appointments.Where(x => x.UserId == userId);
         }
 
         // GET: api/Appointments/5
@@ -80,6 +83,8 @@ namespace calREST.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            appointment.UserId = User.Identity.GetUserId();
 
             db.Appointments.Add(appointment);
             await db.SaveChangesAsync();

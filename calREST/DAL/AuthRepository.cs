@@ -37,7 +37,14 @@ namespace calREST.DAL
         public async Task<ApplicationUser> FindUser(string username, string password)
         {
             ApplicationUser user = await _userManager.FindAsync(username, password);
-           
+          
+            return user;
+        }
+
+        public async Task<ApplicationUser> FindUserById(string UserId)
+        {
+            ApplicationUser user = await _userManager.FindByIdAsync(UserId);
+
             return user;
         }
 

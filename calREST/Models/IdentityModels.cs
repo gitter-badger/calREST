@@ -38,7 +38,7 @@ namespace calREST.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<calREST.Models.Appointment> Appointments { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
 
     }
 }
