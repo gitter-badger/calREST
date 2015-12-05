@@ -9,7 +9,7 @@ namespace calREST.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(calREST.Models.ApplicationDbContext context)

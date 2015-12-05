@@ -11,7 +11,8 @@ namespace calREST.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        public virtual List<Appointment> Appointments { get; set; }
+        //public virtual List<Appointment> Appointments { get; set; }
+        public Calendar Calendar { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
@@ -39,6 +40,7 @@ namespace calREST.Models
         }
 
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Calendar> Calendars { get; set; }
 
     }
 }

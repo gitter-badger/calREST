@@ -1,10 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
+
 
 namespace calREST.Models
 {
@@ -12,10 +10,21 @@ namespace calREST.Models
     {
         [Key]
         public int AppointmentId { get; set; }
+
+        [Required]
+        public DateTime StartDate { get; set; }
+        [Required]
+        public DateTime EndDate { get; set; }
+
         public string Content { get; set; }
 
+        [ForeignKey("Calendar")]
+        public string CalendarId { get; set; }
+        [JsonIgnore]
+        public virtual Calendar Calendar { get; set; }
+
         [ForeignKey("User")]
-        public string UserId { get; set; }
+        public string CreatorId { get; set; }
         [JsonIgnore]
         public virtual ApplicationUser User { get; set; }
     }

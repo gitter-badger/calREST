@@ -30,6 +30,20 @@ namespace calREST.DAL
             };
 
             var result = await _userManager.CreateAsync(user, userModel.Password);
+            if (result.Succeeded)
+            {
+                // if succeed create a calendar
+                _ctx.Calendars.Add(new Calendar
+                {
+                    CalendarId = _userManager.FindByEmail(userModel.Email).Id,
+                    StartTime = new TimeSpan(8, 0, 0),
+                    Interval = new TimeSpan(0, 45, 0),
+                    EndTime = new TimeSpan(20, 0, 0)
+                });
+
+                _ctx.SaveChanges();
+            }
+               
 
             return result;
         }

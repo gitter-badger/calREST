@@ -23,8 +23,9 @@ namespace calREST.Controllers
         // GET: api/Appointments
         public IQueryable<Appointment> GetAppointments()
         {
-           var userId = User.Identity.GetUserId();
-           return db.Appointments.Where(x => x.UserId == userId);
+            var userId = User.Identity.GetUserId();
+            var startDate = DateTime.Now.AddDays(-3);
+           return db.Appointments.Where(x => x.CalendarId == userId && x.StartDate > startDate);
         }
 
         // GET: api/Appointments/5
@@ -84,7 +85,8 @@ namespace calREST.Controllers
                 return BadRequest(ModelState);
             }
 
-            appointment.UserId = User.Identity.GetUserId();
+            appointment.CreatorId = User.Identity.GetUserId();
+            appointment.CalendarId = User.Identity.GetUserId();
 
             db.Appointments.Add(appointment);
             await db.SaveChangesAsync();
