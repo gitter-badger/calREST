@@ -24,8 +24,7 @@ namespace calREST.Controllers
         public IQueryable<Appointment> GetAppointments()
         {
             var userId = User.Identity.GetUserId();
-            var startDate = DateTime.Now.AddDays(-3);
-           return db.Appointments.Where(x => x.CalendarId == userId && x.StartDate > startDate);
+            return db.Appointments.Include("Patient").Where(x => x.CalendarId == userId);
         }
 
         // GET: api/Appointments/5
@@ -88,6 +87,7 @@ namespace calREST.Controllers
             appointment.CreatorId = User.Identity.GetUserId();
             appointment.CalendarId = User.Identity.GetUserId();
 
+                     
             db.Appointments.Add(appointment);
             await db.SaveChangesAsync();
 

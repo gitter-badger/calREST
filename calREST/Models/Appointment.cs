@@ -16,7 +16,9 @@ namespace calREST.Models
         [Required]
         public DateTime EndDate { get; set; }
 
-        public string Content { get; set; }
+        [ForeignKey("Patient")]
+        public int PatientId { get; set; }
+        public Patient Patient { get; set; }
 
         [ForeignKey("Calendar")]
         public string CalendarId { get; set; }
