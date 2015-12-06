@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 using calREST.Models;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
+using calREST.DTOs;
 
 namespace calREST.Controllers
 {
@@ -21,10 +22,24 @@ namespace calREST.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Appointments
-        public IQueryable<Appointment> GetAppointments()
+        public List<AppointmentDTO> GetAppointments()
         {
             var userId = User.Identity.GetUserId();
-            return db.Appointments.Include("Patient").Where(x => x.CalendarId == userId);
+            var appointments = db.Appointments.Where(x => x.CalendarId == userId).ToList();
+            List<AppointmentDTO> appointmentsDto = new List<AppointmentDTO>();
+            foreach (var a in appointments)
+            {
+                appointmentsDto.Add(new AppointmentDTO
+                { AppointmentId = a.AppointmentId,
+                  CalendarId = a.CalendarId,
+                  Creator = new UserInfoModel { Name = a.User.UserName, Id = a.User.Id },
+                  EndDate = a.EndDate,
+                  StartDate = a.StartDate,
+                  Patient = a.Patient,
+                  PatientId = a.PatientId
+                });
+            }
+            return appointmentsDto;
         }
 
         // GET: api/Appointments/5

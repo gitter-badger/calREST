@@ -23,4 +23,11 @@ namespace calREST.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+
+    public class UserInfoModel
+    {
+        public string Id { get; set; }
+
+        public string Name { get; set; }
+    }
 }

@@ -33,6 +33,7 @@ namespace calREST.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Configuration.LazyLoadingEnabled = true;
         }
 
         public static ApplicationDbContext Create()

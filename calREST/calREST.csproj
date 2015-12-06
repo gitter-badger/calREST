@@ -145,6 +145,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppointmentsController.cs" />
     <Compile Include="DAL\AuthRepository.cs" />
+    <Compile Include="DTOs\AppointmentDTO.cs" />
     <Compile Include="Migrations\201512042355181_Added content for appointment.cs" />
     <Compile Include="Migrations\201512042355181_Added content for appointment.Designer.cs">
       <DependentUpon>201512042355181_Added content for appointment.cs</DependentUpon>
