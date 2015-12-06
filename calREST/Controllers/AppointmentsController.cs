@@ -22,10 +22,10 @@ namespace calREST.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Appointments
-        public List<AppointmentDTO> GetAppointments()
+        public IEnumerable<AppointmentDTO> GetAppointments()
         {
             var userId = User.Identity.GetUserId();
-            var appointments = db.Appointments.Where(x => x.CalendarId == userId).ToList();
+            var appointments = db.Appointments.Include(a=> a.Patient).Include(a => a.User).Where(x => x.CalendarId == userId);
             List<AppointmentDTO> appointmentsDto = new List<AppointmentDTO>();
             foreach (var a in appointments)
             {

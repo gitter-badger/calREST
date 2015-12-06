@@ -18,7 +18,7 @@ namespace calREST.Models
 
         [ForeignKey("Patient")]
         public int PatientId { get; set; }
-        public virtual Patient Patient { get; set; }
+        public Patient Patient { get; set; }
 
         [ForeignKey("Calendar")]
         public string CalendarId { get; set; }
@@ -28,6 +28,6 @@ namespace calREST.Models
         [ForeignKey("User")]
         public string CreatorId { get; set; }
         [JsonIgnore]
-        public virtual ApplicationUser User { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }
