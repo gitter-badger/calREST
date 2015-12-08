@@ -1,10 +1,5 @@
-﻿using calREST.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 
 namespace calREST.Models
 {

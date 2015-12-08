@@ -14,43 +14,40 @@ using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using calREST.DTOs;
 using calREST.DAL;
+using calREST.DAL.ServiceUnits;
 
 namespace calREST.Controllers
 {
     [Authorize]
     public class AppointmentsController : ApiController
     {
-        private IApplicationService _appService;
+        private IApplicationService _as;
 
         public AppointmentsController(IApplicationService appService)
         {
-            _appService = appService;
+            _as = appService;
           
         }
 
         //This constructor will be removed when DI will take place.
         public AppointmentsController()
         {
-            _appService  = new ApplicationService(new ApplicationDbContext());
+            _as  = new ApplicationService(new ApplicationDbContext());
         }
 
       
 
         // GET: api/Appointments
         public IEnumerable<AppointmentDTO> GetAppointments()
-        {
-            using (ApplicationService sc = new ApplicationService(new ApplicationDbContext()))
-            {
-              return  sc.AppointmentService.GetAppointmentsByUser(User.Identity.GetUserId());
-
-            }                   
+        {     
+              return _as.AppointmentService.GetAppointmentsByUser(User.Identity.GetUserId());                 
         }
 
         // GET: api/Appointments/5
         [ResponseType(typeof(Appointment))]
         public async Task<IHttpActionResult> GetAppointment(int id)
         {
-            Appointment appointment = await _appService.AppointmentService.DbSet.FindAsync(id);
+            Appointment appointment = await _as.AppointmentService.DbSet.FindAsync(id);
             if (appointment == null)
             {
                 return NotFound();
@@ -73,11 +70,11 @@ namespace calREST.Controllers
                 return BadRequest();
             }
             
-            _appService._context.Entry(appointment).State = EntityState.Modified;
+            _as.Context.Entry(appointment).State = EntityState.Modified;
 
             try
             {
-               await _appService.SubmitAsync();
+               await _as.SubmitAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -107,8 +104,8 @@ namespace calREST.Controllers
             appointment.CalendarId = User.Identity.GetUserId();
 
                      
-            _appService.AppointmentService.DbSet.Add(appointment);
-            await _appService.SubmitAsync();
+            _as.AppointmentService.DbSet.Add(appointment);
+            await _as.SubmitAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = appointment.AppointmentId }, appointment);
         }
@@ -117,14 +114,14 @@ namespace calREST.Controllers
         [ResponseType(typeof(Appointment))]
         public async Task<IHttpActionResult> DeleteAppointment(int id)
         {
-            Appointment appointment = await _appService.AppointmentService.DbSet.FindAsync(id);
+            Appointment appointment = await _as.AppointmentService.DbSet.FindAsync(id);
             if (appointment == null)
             {
                 return NotFound();
             }
 
-            _appService.AppointmentService.DbSet.Remove(appointment);
-            await _appService.SubmitAsync();
+            _as.AppointmentService.DbSet.Remove(appointment);
+            await _as.SubmitAsync();
             return Ok(appointment);
         }
 
@@ -140,7 +137,7 @@ namespace calREST.Controllers
 
         private bool AppointmentExists(int id)
         {
-            return _appService.AppointmentService.DbSet.Count(e => e.AppointmentId == id) > 0;
+            return _as.AppointmentService.DbSet.Count(e => e.AppointmentId == id) > 0;
         }
     }
 }

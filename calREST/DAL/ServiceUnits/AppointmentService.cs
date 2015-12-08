@@ -1,14 +1,14 @@
 ﻿using calREST.DTOs;
+using calREST.DAL.ServiceUnits;
 using calREST.Models;
-using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace calREST.DAL
 {
-    public class AppointmentService:GenericService<Appointment>
+    public class AppointmentService:GenericServiceUnit<Appointment>, IAppointmentService
     {
         public AppointmentService(ApplicationDbContext ctx) 
             : base(ctx) 
@@ -18,7 +18,7 @@ namespace calREST.DAL
         
         public IEnumerable<AppointmentDTO> GetAppointmentsByUser (string userId)
         {
-            var appointments = DbSet.Include("Patient").Include("User").Where(x => x.CalendarId == userId);
+            var appointments = DbSet.Include(a => a.Patient).Include(a => a.User).Where(x => x.CalendarId == userId);
             List<AppointmentDTO> appointmentsDto = new List<AppointmentDTO>();
             foreach (var a in appointments)
             {
