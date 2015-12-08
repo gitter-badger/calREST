@@ -144,7 +144,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppointmentsController.cs" />
+    <Compile Include="DAL\AppointmentService.cs" />
+    <Compile Include="DAL\GenericService.cs" />
+    <Compile Include="DAL\IGenericService.cs" />
+    <Compile Include="DAL\ApplicationService.cs" />
+    <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="DAL\AuthRepository.cs" />
+    <Compile Include="DAL\IApplicationService.cs" />
     <Compile Include="DTOs\AppointmentDTO.cs" />
     <Compile Include="Migrations\201512042355181_Added content for appointment.cs" />
     <Compile Include="Migrations\201512042355181_Added content for appointment.Designer.cs">

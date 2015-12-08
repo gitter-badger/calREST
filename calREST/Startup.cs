@@ -1,4 +1,5 @@
-﻿using calREST.Models;
+﻿using calREST.DAL;
+using calREST.Models;
 using calREST.Providers;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;

@@ -13,40 +13,44 @@ using calREST.Models;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using calREST.DTOs;
+using calREST.DAL;
 
 namespace calREST.Controllers
 {
     [Authorize]
     public class AppointmentsController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IApplicationService _appService;
+
+        public AppointmentsController(IApplicationService appService)
+        {
+            _appService = appService;
+          
+        }
+
+        //This constructor will be removed when DI will take place.
+        public AppointmentsController()
+        {
+            _appService  = new ApplicationService(new ApplicationDbContext());
+        }
+
+      
 
         // GET: api/Appointments
         public IEnumerable<AppointmentDTO> GetAppointments()
         {
-            var userId = User.Identity.GetUserId();
-            var appointments = db.Appointments.Include(a=> a.Patient).Include(a => a.User).Where(x => x.CalendarId == userId);
-            List<AppointmentDTO> appointmentsDto = new List<AppointmentDTO>();
-            foreach (var a in appointments)
+            using (ApplicationService sc = new ApplicationService(new ApplicationDbContext()))
             {
-                appointmentsDto.Add(new AppointmentDTO
-                { AppointmentId = a.AppointmentId,
-                  CalendarId = a.CalendarId,
-                  Creator = new UserInfoModel { Name = a.User.UserName, Id = a.User.Id },
-                  EndDate = a.EndDate,
-                  StartDate = a.StartDate,
-                  Patient = a.Patient,
-                  PatientId = a.PatientId
-                });
-            }
-            return appointmentsDto;
+              return  sc.AppointmentService.GetAppointmentsByUser(User.Identity.GetUserId());
+
+            }                   
         }
 
         // GET: api/Appointments/5
         [ResponseType(typeof(Appointment))]
         public async Task<IHttpActionResult> GetAppointment(int id)
         {
-            Appointment appointment = await db.Appointments.FindAsync(id);
+            Appointment appointment = await _appService.AppointmentService.DbSet.FindAsync(id);
             if (appointment == null)
             {
                 return NotFound();
@@ -68,12 +72,12 @@ namespace calREST.Controllers
             {
                 return BadRequest();
             }
-
-            db.Entry(appointment).State = EntityState.Modified;
+            
+            _appService._context.Entry(appointment).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+               await _appService.SubmitAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -103,8 +107,8 @@ namespace calREST.Controllers
             appointment.CalendarId = User.Identity.GetUserId();
 
                      
-            db.Appointments.Add(appointment);
-            await db.SaveChangesAsync();
+            _appService.AppointmentService.DbSet.Add(appointment);
+            await _appService.SubmitAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = appointment.AppointmentId }, appointment);
         }
@@ -113,30 +117,30 @@ namespace calREST.Controllers
         [ResponseType(typeof(Appointment))]
         public async Task<IHttpActionResult> DeleteAppointment(int id)
         {
-            Appointment appointment = await db.Appointments.FindAsync(id);
+            Appointment appointment = await _appService.AppointmentService.DbSet.FindAsync(id);
             if (appointment == null)
             {
                 return NotFound();
             }
 
-            db.Appointments.Remove(appointment);
-            await db.SaveChangesAsync();
-
+            _appService.AppointmentService.DbSet.Remove(appointment);
+            await _appService.SubmitAsync();
             return Ok(appointment);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //This will be handled by DI.
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        _sc.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
 
         private bool AppointmentExists(int id)
         {
-            return db.Appointments.Count(e => e.AppointmentId == id) > 0;
+            return _appService.AppointmentService.DbSet.Count(e => e.AppointmentId == id) > 0;
         }
     }
 }
