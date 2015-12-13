@@ -1,20 +1,17 @@
-﻿using calREST.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
-namespace calREST.DTOs
+
+namespace calREST.Domain
 {
     public class AppointmentDTO
     {
         public int AppointmentId { get; set; }
 
         [Required]
-        public DateTime StartDate { get; set; }
+        public DateTimeOffset StartDate { get; set; }
         [Required]
-        public DateTime EndDate { get; set; }
+        public DateTimeOffset EndDate { get; set; }
 
         public int? PatientId { get; set; }
         public Patient Patient { get; set; }

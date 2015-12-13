@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using calREST.Models;
+using calREST.Domain;
 using Microsoft.AspNet.Identity;
-using System.Security.Claims;
-using calREST.DTOs;
 using calREST.DAL;
-using calREST.DAL.ServiceUnits;
 
 namespace calREST.Controllers
 {
@@ -47,7 +41,7 @@ namespace calREST.Controllers
         [ResponseType(typeof(Appointment))]
         public async Task<IHttpActionResult> GetAppointment(int id)
         {
-            Appointment appointment = await _as.AppointmentService.DbSet.FindAsync(id);
+            Appointment appointment = _as.AppointmentService.GetSingle(id);
             if (appointment == null)
             {
                 return NotFound();
@@ -65,12 +59,12 @@ namespace calREST.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != appointment.AppointmentId)
+            if (id != appointment.Id)
             {
                 return BadRequest();
             }
-            
-            _as.Context.Entry(appointment).State = EntityState.Modified;
+
+            _as.AppointmentService.Update(appointment);
 
             try
             {
@@ -78,7 +72,7 @@ namespace calREST.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AppointmentExists(id))
+                if (!_as.AppointmentService.Exists(id))
                 {
                     return NotFound();
                 }
@@ -104,40 +98,27 @@ namespace calREST.Controllers
             appointment.CalendarId = User.Identity.GetUserId();
 
                      
-            _as.AppointmentService.DbSet.Add(appointment);
+            _as.AppointmentService.Add(appointment);
             await _as.SubmitAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = appointment.AppointmentId }, appointment);
+            return CreatedAtRoute("DefaultApi", new { id = appointment.Id }, appointment);
         }
 
         // DELETE: api/Appointments/5
         [ResponseType(typeof(Appointment))]
         public async Task<IHttpActionResult> DeleteAppointment(int id)
         {
-            Appointment appointment = await _as.AppointmentService.DbSet.FindAsync(id);
+            Appointment appointment = await _as.AppointmentService.FindBy(x => x.Id == id).FirstOrDefaultAsync();
             if (appointment == null)
             {
                 return NotFound();
             }
 
-            _as.AppointmentService.DbSet.Remove(appointment);
+            _as.AppointmentService.Delete(appointment);
             await _as.SubmitAsync();
             return Ok(appointment);
         }
 
-        //This will be handled by DI.
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        _sc.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
-
-        private bool AppointmentExists(int id)
-        {
-            return _as.AppointmentService.DbSet.Count(e => e.AppointmentId == id) > 0;
-        }
+       
     }
 }

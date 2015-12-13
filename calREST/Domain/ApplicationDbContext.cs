@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 
-namespace calREST.Models
+namespace calREST.Domain
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

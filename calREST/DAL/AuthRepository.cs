@@ -1,4 +1,4 @@
-﻿using calREST.Models;
+﻿using calREST.Domain;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -33,7 +33,7 @@ namespace calREST.DAL
                 // if succeed create a calendar
                 _ctx.Calendars.Add(new Calendar
                 {
-                    CalendarId = _userManager.FindByEmail(userModel.Email).Id,
+                    Id = _userManager.FindByEmail(userModel.Email).Id,
                     StartTime = new TimeSpan(8, 0, 0),
                     Interval = new TimeSpan(0, 45, 0),
                     EndTime = new TimeSpan(20, 0, 0)

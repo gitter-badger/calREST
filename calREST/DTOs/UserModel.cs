@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace calREST.Models
+namespace calREST.Domain
 {
     public class UserModel
     {

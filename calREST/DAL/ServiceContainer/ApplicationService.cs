@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using calREST.Models;
+﻿using calREST.Domain;
 using System.Threading.Tasks;
 using calREST.DAL.ServiceUnits;
+using System;
 
 namespace calREST.DAL
 {
     public class ApplicationService : IApplicationService
     {
-        public ApplicationDbContext Context { get;}
+        private ApplicationDbContext _context;
 
-        private AppointmentService appointmentService;
+        private IAppointmentService appointmentService;
 
         public IAppointmentService AppointmentService
         {
@@ -20,7 +17,7 @@ namespace calREST.DAL
             {
                 if (this.appointmentService == null)
                 {
-                    this.appointmentService = new AppointmentService(Context);
+                    this.appointmentService = new AppointmentService(_context);
                 }
                 return appointmentService;
             }
@@ -29,18 +26,23 @@ namespace calREST.DAL
 
         public ApplicationService(ApplicationDbContext ctx)
         {
-            Context = ctx;
+            _context = ctx;
         }
 
         public int SubmitChanges()
         {
-            return this.Context.SaveChanges();
+            return this._context.SaveChanges();
      
         }
 
         public async Task<int> SubmitAsync()
         {
-            return await Context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
+        }
+
+        public void Dispose()
+        {
+            this._context.Dispose();
         }
     }
 }

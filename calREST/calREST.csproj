@@ -144,33 +144,26 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppointmentsController.cs" />
+    <Compile Include="DAL\GenericRepository\EntityRepository.cs" />
+    <Compile Include="DAL\GenericRepository\IEntity.cs" />
+    <Compile Include="DAL\GenericRepository\IEntityRepository.cs" />
+    <Compile Include="DAL\GenericRepository\IRepository.cs" />
+    <Compile Include="DAL\GenericRepository\PaginatedList.cs" />
+    <Compile Include="DAL\GenericRepository\QueryableExtensions.cs" />
+    <Compile Include="DAL\ServiceContainer\IService.cs" />
     <Compile Include="DAL\ServiceUnits\AppointmentService.cs" />
-    <Compile Include="DAL\ServiceUnits\GenericServiceUnit.cs" />
     <Compile Include="DAL\ServiceUnits\IAppointmentService.cs" />
-    <Compile Include="DAL\ServiceUnits\IGenericServiceUnit.cs" />
     <Compile Include="DAL\ServiceContainer\ApplicationService.cs" />
-    <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Domain\ApplicationDbContext.cs" />
     <Compile Include="DAL\AuthRepository.cs" />
     <Compile Include="DAL\ServiceContainer\IApplicationService.cs" />
     <Compile Include="DTOs\AppointmentDTO.cs" />
-    <Compile Include="Migrations\201512042355181_Added content for appointment.cs" />
-    <Compile Include="Migrations\201512042355181_Added content for appointment.Designer.cs">
-      <DependentUpon>201512042355181_Added content for appointment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512051921379_Patients.cs" />
-    <Compile Include="Migrations\201512051921379_Patients.Designer.cs">
-      <DependentUpon>201512051921379_Patients.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512052002180_PatientsName.cs" />
-    <Compile Include="Migrations\201512052002180_PatientsName.Designer.cs">
-      <DependentUpon>201512052002180_PatientsName.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Appointment.cs" />
-    <Compile Include="Models\Calendar.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Patient.cs" />
-    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Domain\Appointment.cs" />
+    <Compile Include="Domain\Calendar.cs" />
+    <Compile Include="Domain\IdentityModels.cs" />
+    <Compile Include="Domain\Patient.cs" />
+    <Compile Include="DTOs\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Startup.cs" />
@@ -186,17 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512042355181_Added content for appointment.resx">
-      <DependentUpon>201512042355181_Added content for appointment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512051921379_Patients.resx">
-      <DependentUpon>201512051921379_Patients.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512052002180_PatientsName.resx">
-      <DependentUpon>201512052002180_PatientsName.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="Repository\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

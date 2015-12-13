@@ -1,14 +1,15 @@
-﻿using Newtonsoft.Json;
+﻿using calREST.DAL.GenericRepository;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace calREST.Models
+namespace calREST.Domain
 {
-    public class Patient
+    public class Patient:IEntity<int>
     {
         [Key]
-        public int PatientId { get; set; }
+        public int Id { get; set; }
 
         [ForeignKey("User")]
         public string OwnerId { get; set; }
@@ -20,7 +21,7 @@ namespace calREST.Models
 
         public string PhoneNumber { get; set; }
         public string Note { get; set; }
-        public DateTime CreationDate { get; set; } = DateTime.Now;
+        public DateTimeOffset CreationDate { get; set; } = DateTime.Now;
 
     }
 }
