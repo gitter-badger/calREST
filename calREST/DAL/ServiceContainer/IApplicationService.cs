@@ -1,11 +1,11 @@
-﻿using calREST.DAL.ServiceUnits;
-using System;
+﻿using calREST.DAL.Repositories;
+using calREST.DAL.Services;
 
 namespace calREST.DAL
 {
-    public interface IApplicationService : IService
+    public interface IApplicationService : IServiceContainer
     {
-        IAppointmentService AppointmentService { get;}
-      
+        IAppointmentRepository AppointmentRepository { get;}
+        IUserService UserService { get; }
     }
 }

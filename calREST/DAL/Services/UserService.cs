@@ -1,22 +1,22 @@
 ﻿using calREST.Domain;
+using calREST.DTOs;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Threading.Tasks;
 
 
-namespace calREST.DAL
+namespace calREST.DAL.Services
 {
-    public class AuthRepository : IDisposable
+    public class UserService : IUserService
     {
         private ApplicationDbContext _ctx;
 
         private UserManager<ApplicationUser> _userManager;
 
-        public AuthRepository()
+        public UserService(ApplicationDbContext ctx, UserManager<ApplicationUser> userManager)
         {
-            _ctx = new ApplicationDbContext();
-            _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_ctx));
+            _ctx = ctx;
+            _userManager = userManager;
         }
 
         public async Task<IdentityResult> RegisterUser(UserModel userModel)
@@ -62,9 +62,7 @@ namespace calREST.DAL
 
         public void Dispose()
         {
-            _ctx.Dispose();
             _userManager.Dispose();
-
         }
     }
 }

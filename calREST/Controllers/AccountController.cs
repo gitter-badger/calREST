@@ -1,5 +1,6 @@
 ﻿using calREST.DAL;
 using calREST.Domain;
+using calREST.DTOs;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -9,12 +10,18 @@ namespace calREST.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        private AuthRepository _repo = null;
+        private readonly IApplicationService _as;
+
+        public AccountController(IApplicationService appService)
+        {
+            _as = appService;
+        }
 
         public AccountController()
         {
-            _repo = new AuthRepository();
+            _as = new ApplicationService(new ApplicationDbContext());
         }
+        
 
         // POST api/Account/Register
         [AllowAnonymous]
@@ -26,7 +33,7 @@ namespace calREST.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await _repo.RegisterUser(userModel);
+            IdentityResult result = await _as.UserService.RegisterUser(userModel);
 
             IHttpActionResult errorResult = GetErrorResult(result);
 
@@ -36,16 +43,6 @@ namespace calREST.Controllers
             }
 
             return Ok();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _repo.Dispose();
-            }
-
-            base.Dispose(disposing);
         }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)

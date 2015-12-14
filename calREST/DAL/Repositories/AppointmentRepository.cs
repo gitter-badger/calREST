@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using calREST.DAL.GenericRepository;
+using calREST.DTOs;
 
-namespace calREST.DAL.ServiceUnits
+namespace calREST.DAL.Repositories
 {
-    public class AppointmentService : EntityRepository<Appointment, int>, IAppointmentService 
+    public class AppointmentRepository : EntityRepository<Appointment, int>, IAppointmentRepository 
     {
-        public AppointmentService(ApplicationDbContext ctx) 
+        public AppointmentRepository(ApplicationDbContext ctx) 
             : base(ctx) 
         {
           

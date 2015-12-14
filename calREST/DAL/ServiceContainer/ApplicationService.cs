@@ -1,7 +1,10 @@
 ﻿using calREST.Domain;
 using System.Threading.Tasks;
-using calREST.DAL.ServiceUnits;
+using calREST.DAL.Repositories;
 using System;
+using calREST.DAL.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace calREST.DAL
 {
@@ -9,25 +12,38 @@ namespace calREST.DAL
     {
         private ApplicationDbContext _context;
 
-        private IAppointmentService appointmentService;
-
-        public IAppointmentService AppointmentService
-        {
-            get
-            {
-                if (this.appointmentService == null)
-                {
-                    this.appointmentService = new AppointmentService(_context);
-                }
-                return appointmentService;
-            }
-
-       }
-
         public ApplicationService(ApplicationDbContext ctx)
         {
             _context = ctx;
         }
+
+        private IAppointmentRepository appointmentRepository;
+        private IUserService userService;
+
+        public IAppointmentRepository AppointmentRepository
+        {
+            get
+            {
+                if (this.appointmentRepository == null)
+                {
+                    this.appointmentRepository = new AppointmentRepository(_context);
+                }
+                return appointmentRepository;
+            }
+
+       }
+        public IUserService UserService
+        {
+            get
+            {
+                if (this.userService == null)
+                {
+                    this.userService = new UserService(_context, new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context)));
+                }
+                return userService;
+            }
+        }
+
 
         public int SubmitChanges()
         {
@@ -43,6 +59,7 @@ namespace calREST.DAL
         public void Dispose()
         {
             this._context.Dispose();
+            this.userService.Dispose();
         }
     }
 }

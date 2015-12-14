@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using calREST.DAL.GenericRepository;
 
-namespace calREST.DAL.ServiceUnits
+namespace calREST.DAL.Repositories
 {
-    public interface IAppointmentService : IEntityRepository<Appointment, int>
+    public interface IAppointmentRepository : IEntityRepository<Appointment, int>
     {
         IEnumerable<AppointmentDTO> GetAppointmentsByUser(string userId);
     }

@@ -150,12 +150,13 @@
     <Compile Include="DAL\GenericRepository\IRepository.cs" />
     <Compile Include="DAL\GenericRepository\PaginatedList.cs" />
     <Compile Include="DAL\GenericRepository\QueryableExtensions.cs" />
-    <Compile Include="DAL\ServiceContainer\IService.cs" />
-    <Compile Include="DAL\ServiceUnits\AppointmentService.cs" />
-    <Compile Include="DAL\ServiceUnits\IAppointmentService.cs" />
+    <Compile Include="DAL\Services\IUserService.cs" />
+    <Compile Include="DAL\ServiceContainer\IServiceContainer.cs" />
+    <Compile Include="DAL\Repositories\AppointmentRepository.cs" />
+    <Compile Include="DAL\Repositories\IAppointmentRepository.cs" />
     <Compile Include="DAL\ServiceContainer\ApplicationService.cs" />
     <Compile Include="Domain\ApplicationDbContext.cs" />
-    <Compile Include="DAL\AuthRepository.cs" />
+    <Compile Include="DAL\Services\UserService.cs" />
     <Compile Include="DAL\ServiceContainer\IApplicationService.cs" />
     <Compile Include="DTOs\AppointmentDTO.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -179,7 +180,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Repository\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

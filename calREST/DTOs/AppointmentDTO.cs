@@ -1,4 +1,5 @@
-﻿using System;
+﻿using calREST.DTOs;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 
