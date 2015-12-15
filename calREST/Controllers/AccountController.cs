@@ -16,12 +16,7 @@ namespace calREST.Controllers
         {
             _as = appService;
         }
-
-        public AccountController()
-        {
-            _as = new ApplicationService(new ApplicationDbContext());
-        }
-        
+   
 
         // POST api/Account/Register
         [AllowAnonymous]

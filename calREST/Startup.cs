@@ -1,14 +1,14 @@
-﻿using calREST.DAL;
-using calREST.Domain;
+﻿using calREST.Domain;
 using calREST.Providers;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
+using Ninject.Web.WebApi.OwinHost;
+using Ninject.Web.Common.OwinHost;
 using Owin;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
+
+
 namespace calREST
 {
     public class Startup
@@ -20,7 +20,8 @@ namespace calREST
         
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-            app.UseWebApi(config);
+            app.UseNinjectMiddleware(NinjectConfig.CreateKernel).UseNinjectWebApi(config);
+            //app.UseWebApi(config);
         }
 
         public static string PublicClientId { get; private set; }
@@ -46,5 +47,7 @@ namespace calREST
      
 
         }
+
+       
     }
 }

@@ -23,17 +23,9 @@ namespace calREST.Controllers
           
         }
 
-        //This constructor will be removed when DI will take place.
-        public AppointmentsController()
-        {
-            _as  = new ApplicationService(new ApplicationDbContext());
-        }
-
-      
-
         // GET: api/Appointments
         public IEnumerable<AppointmentDTO> GetAppointments()
-        {     
+        {         
               return _as.AppointmentRepository.GetAppointmentsByUser(User.Identity.GetUserId());                 
         }
 

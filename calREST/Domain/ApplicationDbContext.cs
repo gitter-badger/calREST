@@ -20,5 +20,10 @@ namespace calREST.Domain
         public DbSet<Calendar> Calendars { get; set; }
         public DbSet<Patient> Patients { get; set; }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
+
     }
 }

@@ -56,10 +56,5 @@ namespace calREST.DAL
             return await _context.SaveChangesAsync();
         }
 
-        public void Dispose()
-        {
-            this._context.Dispose();
-            this.userService.Dispose();
-        }
     }
 }
