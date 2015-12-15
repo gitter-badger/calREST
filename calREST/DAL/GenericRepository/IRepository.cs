@@ -17,7 +17,7 @@ namespace calREST.DAL.GenericRepository
         where TId : IComparable
     {
 
-        IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> GetDbSet();
         IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate);
         PaginatedList<TEntity> Paginate(int pageIndex, int pageSize);
 

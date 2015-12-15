@@ -33,7 +33,7 @@ namespace calREST.DAL.GenericRepository
             _dbContext = dbContext;
         }
 
-        public IQueryable<TEntity> GetAll()
+        public IQueryable<TEntity> GetDbSet()
         {
 
             return _dbContext.Set<TEntity>();
@@ -42,7 +42,7 @@ namespace calREST.DAL.GenericRepository
         public IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] includeProperties)
         {
 
-            IQueryable<TEntity> queryable = GetAll();
+            IQueryable<TEntity> queryable = GetDbSet();
             foreach (Expression<Func<TEntity, object>> includeProperty in includeProperties)
             {
 
@@ -55,7 +55,8 @@ namespace calREST.DAL.GenericRepository
         public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
         {
 
-            IQueryable<TEntity> queryable = GetAll().Where<TEntity>(predicate);
+            IQueryable<TEntity> queryable = GetDbSet().Where<TEntity>(predicate);
+
             return queryable;
         }
 
@@ -99,8 +100,9 @@ namespace calREST.DAL.GenericRepository
         public TEntity GetSingle(TId id)
         {
 
-            IQueryable<TEntity> entities = GetAll();
+            IQueryable<TEntity> entities = GetDbSet();
             TEntity entity = Filter<TId>(entities, x => x.Id, id).FirstOrDefault();
+     
             return entity;
         }
 
