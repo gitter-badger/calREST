@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace calREST.DAL
 {
-   public interface IServiceContainer
+   public interface IServiceContainer : IDisposable
     {
         int SubmitChanges();
         Task<int> SubmitAsync();

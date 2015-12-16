@@ -187,6 +187,8 @@
     <Compile Include="DAL\GenericRepository\IRepository.cs" />
     <Compile Include="DAL\GenericRepository\PaginatedList.cs" />
     <Compile Include="DAL\GenericRepository\QueryableExtensions.cs" />
+    <Compile Include="DAL\Repositories\CalendarRepository.cs" />
+    <Compile Include="DAL\Repositories\ICalendarRepository.cs" />
     <Compile Include="DAL\Services\IUserService.cs" />
     <Compile Include="DAL\ServiceContainer\IServiceContainer.cs" />
     <Compile Include="DAL\Repositories\AppointmentRepository.cs" />

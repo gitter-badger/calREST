@@ -27,21 +27,7 @@ namespace calREST.DAL.Services
                 UserName = userModel.Email
             };
 
-            var result = await _userManager.CreateAsync(user, userModel.Password);
-            if (result.Succeeded)
-            {
-                // if succeed create a calendar
-                _ctx.Calendars.Add(new Calendar
-                {
-                    Id = _userManager.FindByEmail(userModel.Email).Id,
-                    StartTime = new TimeSpan(8, 0, 0),
-                    Interval = new TimeSpan(0, 45, 0),
-                    EndTime = new TimeSpan(20, 0, 0)
-                });
-
-                _ctx.SaveChanges();
-            }
-               
+            var result = await _userManager.CreateAsync(user, userModel.Password);              
 
             return result;
         }
@@ -58,6 +44,11 @@ namespace calREST.DAL.Services
             ApplicationUser user = await _userManager.FindByIdAsync(UserId);
 
             return user;
+        }
+
+        public string GetUserIdByEmail(string email)
+        {
+            return _userManager.FindByEmail(email).Id;
         }
 
         public void Dispose()

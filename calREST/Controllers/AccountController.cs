@@ -2,6 +2,7 @@
 using calREST.Domain;
 using calREST.DTOs;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -28,7 +29,7 @@ namespace calREST.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await _as.UserService.RegisterUser(userModel);
+            IdentityResult result = await _as.UserService.RegisterUser(userModel);         
 
             IHttpActionResult errorResult = GetErrorResult(result);
 
@@ -36,8 +37,11 @@ namespace calREST.Controllers
             {
                 return errorResult;
             }
-
-            return Ok();
+            if (result.Succeeded)
+                _as.CalendarRepo.AddDefaultCalendar(_as.UserService.GetUserIdByEmail(userModel.Email));          
+                           
+            _as.SubmitChanges();
+            return Ok(userModel.Email);
         }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)

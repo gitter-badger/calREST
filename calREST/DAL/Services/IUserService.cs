@@ -11,5 +11,6 @@ namespace calREST.DAL.Services
         Task<IdentityResult> RegisterUser(UserModel userModel);
         Task<ApplicationUser> FindUser(string username, string password);
         Task<ApplicationUser> FindUserById(string UserId);
+        string GetUserIdByEmail(string email);
     }
 }

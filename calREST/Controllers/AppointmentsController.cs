@@ -9,6 +9,7 @@ using System.Web.Http.Description;
 using calREST.Domain;
 using Microsoft.AspNet.Identity;
 using calREST.DAL;
+using calREST.DAL.GenericRepository;
 
 namespace calREST.Controllers
 {
@@ -16,24 +17,22 @@ namespace calREST.Controllers
     public class AppointmentsController : ApiController
     {
         private IApplicationService _as;
-
         public AppointmentsController(IApplicationService appService)
         {
             _as = appService;
-          
         }
 
         // GET: api/Appointments
         public IEnumerable<AppointmentDTO> GetAppointments()
-        {         
-              return _as.AppointmentRepository.GetAppointmentsByUser(User.Identity.GetUserId());                 
+        {
+              return _as.AppointmentRepo.GetAppointmentsByUser(User.Identity.GetUserId());                 
         }
 
         // GET: api/Appointments/5
         [ResponseType(typeof(Appointment))]
         public IHttpActionResult GetAppointment(int id)
         {
-            Appointment appointment = _as.AppointmentRepository.GetSingle(id);
+            Appointment appointment = _as.AppointmentRepo.GetSingle(id);
             if (appointment == null)
             {
                 return NotFound();
@@ -56,7 +55,7 @@ namespace calREST.Controllers
                 return BadRequest();
             }
 
-            _as.AppointmentRepository.Update(appointment);
+            _as.AppointmentRepo.Update(appointment);
 
             try
             {
@@ -64,7 +63,7 @@ namespace calREST.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_as.AppointmentRepository.Exists(id))
+                if (!_as.AppointmentRepo.Exists(id))
                 {
                     return NotFound();
                 }
@@ -90,7 +89,7 @@ namespace calREST.Controllers
             appointment.CalendarId = User.Identity.GetUserId();
 
                      
-            _as.AppointmentRepository.Add(appointment);
+            _as.AppointmentRepo.Add(appointment);
             await _as.SubmitAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = appointment.Id }, appointment);
@@ -100,13 +99,13 @@ namespace calREST.Controllers
         [ResponseType(typeof(Appointment))]
         public async Task<IHttpActionResult> DeleteAppointment(int id)
         {
-            Appointment appointment = await _as.AppointmentRepository.FindBy(x => x.Id == id).FirstOrDefaultAsync();
+            Appointment appointment = await _as.AppointmentRepo.FindBy(x => x.Id == id).FirstOrDefaultAsync();
             if (appointment == null)
             {
                 return NotFound();
             }
 
-            _as.AppointmentRepository.Delete(appointment);
+            _as.AppointmentRepo.Delete(appointment);
             await _as.SubmitAsync();
             return Ok(appointment);
         }
