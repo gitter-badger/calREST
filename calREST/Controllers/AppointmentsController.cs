@@ -10,6 +10,7 @@ using calREST.Domain;
 using Microsoft.AspNet.Identity;
 using calREST.DAL;
 using calREST.DAL.GenericRepository;
+using calREST.DTOs;
 
 namespace calREST.Controllers
 {

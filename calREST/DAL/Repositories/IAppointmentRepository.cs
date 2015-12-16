@@ -1,6 +1,7 @@
 ﻿using calREST.Domain;
 using System.Collections.Generic;
 using calREST.DAL.GenericRepository;
+using calREST.DTOs;
 
 namespace calREST.DAL.Repositories
 {
