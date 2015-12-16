@@ -46,9 +46,9 @@ namespace calREST.DAL.Services
             return user;
         }
 
-        public string GetUserIdByEmail(string email)
+        public ApplicationUser GetUserByEmail(string email)
         {
-            return _userManager.FindByEmail(email).Id;
+            return _userManager.FindByEmail(email);
         }
 
         public void Dispose()

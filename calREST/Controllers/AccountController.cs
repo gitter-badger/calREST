@@ -38,7 +38,7 @@ namespace calREST.Controllers
                 return errorResult;
             }
             if (result.Succeeded)
-                _as.CalendarRepo.AddDefaultCalendar(_as.UserService.GetUserIdByEmail(userModel.Email));          
+                _as.CalendarRepo.AddDefaultCalendar(_as.UserService.GetUserByEmail(userModel.Email));          
                            
             _as.SubmitChanges();
             return Ok(userModel.Email);

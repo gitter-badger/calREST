@@ -16,12 +16,12 @@ namespace calREST.DAL.Repositories
           
         }
 
-        public void AddDefaultCalendar(string userId)
+        public void AddDefaultCalendar(ApplicationUser user)
         {
             // Calendar ID and User ID is the same as they have 1-1 relationship.
             this.Add(new Calendar
             {
-                Id = userId,
+                User = user,
                 StartTime = new TimeSpan(8, 0, 0),
                 Interval = new TimeSpan(0, 45, 0),
                 EndTime = new TimeSpan(20, 0, 0)
