@@ -201,7 +201,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Domain\Appointment.cs" />
     <Compile Include="Domain\Calendar.cs" />
-    <Compile Include="Domain\IdentityModels.cs" />
+    <Compile Include="Domain\ApplicationUser.cs" />
     <Compile Include="Domain\Patient.cs" />
     <Compile Include="DTOs\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -219,6 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
